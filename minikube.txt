@@ -1,0 +1,48 @@
+Minikube Automation Steps
+Step 1: Start Minikube Cluster
+minikube start
+
+Step 2: Create and Manage Deployment
+kubectl create deployment mynginx --image=nginx
+
+if already created then 
+
+kubectl set image deployment/myngnix nginx=nginx:latest
+
+kubectl get deployments
+	Ensure mynginx appears in the output.
+
+Check the following commands:
+	kubectl get pods
+	kubectl describe pods
+
+Expose Deployment as a Service:
+kubectl expose deployment mynginx --type=NodePort --port=80 --target-port=80
+
+Step 3: Scale the Deployment
+kubectl scale deployment mynginx --replicas=4
+kubectl get service myngnix
+
+Step 4: Access the Nginx App
+1.	Using Port Forwarding:
+kubectl port-forward svc/mynginx 8081:80
+
+	Access the app via http://localhost:8081.
+
+If Error, use this option, Using Minikube Tunnel:
+o	Start the tunnel:
+minikube tunnel
+o	Retrieve the service URL:
+minikube service mynginx --url
+o	Open the provided URL in your browser.
+o	Open the kubernets dashboard
+	Open the minikube dashboard	
+
+Step 5: Stop and Clean Up
+1.	Stop Nginx Deployment:
+kubectl delete deployment mynginx
+kubectl delete service mynginx
+2.	Stop Minikube (Optional):
+minikube stop
+3.	Delete Minikube Cluster (Optional):
+minikube delete
