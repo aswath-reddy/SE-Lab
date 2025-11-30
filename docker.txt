@@ -1,0 +1,70 @@
+1. Pull the image
+    docker pull ubuntu:latest
+    docker pull redis
+
+2. Run the container
+    docker run --name my-redis -d redis
+    docker run -it -p 9090:80 --name myubuntu1 ubuntu:latest
+    docker run -it -p 9090:80 --name myubuntu1 -d ubuntu:latest (in background)
+
+3. Check running containers
+      docker ps
+
+4. Access Redis
+      docker exec -it my-redis redis-cli
+      
+      Example Redis Commands:
+      127.0.0.1:6379> SET name "Adi"
+      OK
+      127.0.0.1:6379> GET name
+      "Adi"
+      127.0.0.1:6379> exit
+
+5. Stop the container
+        docker stop my-redis
+
+6. Restart the container
+        docker start my-redis
+
+7. Remove the container
+        docker rm my-redis
+
+8. Remove the image
+        docker rmi redis
+
+
+
+
+        
+1. Setup folder
+        C:\Users\rpich\Desktop\DockerProjects\Redis
+
+2. Write Dockerfile
+        a. Create Dockerfile
+        b. FROM redis:latest
+           CMD ["redis-server"]
+
+1. docker build -t redisnew .
+2. docker run --name myredisnew -d redisnew
+3. docker images
+4. docker ps -a
+5. docker stop myredisnew
+6. docker login
+7. docker commit <container-id> aswathreddy/redis1
+8. docker push aswathreddy/redis1
+9. docker rm <container-id>
+10. docker rm1 aswathreddy/redis1
+11. docker logout
+12. docker pull aswathreddy/redis1
+13. docker run --name myredis -d aswathreddy/redis1
+14. docker exec -it myredis redis-cli
+      Example Redis Commands:
+      127.0.0.1:6379> SET name "Adi"
+      OK
+      127.0.0.1:6379> GET name
+      "Adi"
+      127.0.0.1:6379> exit
+15. docker stop myredis
+16. docker rm <container-id>
+17. docker rm1 aswathreddy/redis1
+18. docker logout
