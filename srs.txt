@@ -1,0 +1,24 @@
+a. Abstract
+Answer: The abstract is a concise summary of the Campus Event Management System project's goals, problem it solves, and key features.
+The system aims to streamline the organization and participation in college events. Key functions include event creation, user registration, scheduling, real-time notifications, and offering an intuitive interface for students, faculty, and administrators. The goal is to improve event attendance, communication, and management efficiency across campus activities. 
+b. Functional Requirements
+Answer: Functional requirements define the specific actions the system must perform.
+These requirements describe the system's core capabilities and features, detailing what the software should do. For this system, they would include: 
+Allowing users (students, faculty, administrators) to register and log in. 
+Enabling administrators and faculty to create, edit, and manage events, including scheduling and details.
+Providing a mechanism for students to browse and register for events.
+Implementing real-time notification functionality to inform users about event updates.
+Facilitating data processing for inputs, outputs, and user interactions. 
+c. Non-Functional Requirements
+Answer: Non-functional requirements specify quality attributes and constraints of the system.
+These requirements focus on operational characteristics rather than specific functions. They often relate to the "ilities" such as reliability, availability, security, and usability. For this system, they would include: 
+Performance: Ensuring the system can handle a specific number of concurrent users during peak registration periods. 
+Security: Implementing robust data protection for user information and event data. 
+Usability: Providing an intuitive interface that is easy for all user types to navigate and use efficiently.
+Reliability: Ensuring the system is available and operational during scheduled event management times. 
+d. Identification of Users
+Answer: The primary users of the system are students, faculty, and administrators.
+The system is designed to cater to the different roles and needs of these specific user groups. 
+Students: Primarily use the system for browsing events, registration, and receiving notifications.
+Faculty: Use the system for creating and managing specific departmental or course-related events.
+Administrators: Have high-level access to oversee all campus events, manage users, and ensure overall system efficiency.
