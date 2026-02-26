@@ -1,0 +1,55 @@
+EBS
+
+Create → Attach → lsblk → fdisk → mkfs → mount → fstab → reboot
+
+1) Connect to EC2 using ssh
+
+2) view attached volume:  
+	lsblk
+	lsblk -fs
+
+3) create partition:
+	sudo fdisk /dev/nvme1n1
+	n -> p -> Enter -> Enter -> Enter -> w
+	sudo partprobe
+
+4) Format volume:
+	sudo mkfs.xfs /dev/nvme1n1p1
+	
+5) Create Mount Directory:
+	sudo mkdir /mnt/ebstry
+
+6) Mount Volume:
+	sudo mount /dev/nvme1n1p1 /mnt/ebstry
+	df -h
+
+7) Permanent Mount:
+	sudo blkid
+	sudo nano /etc/fstab
+	Write in file :  UUID="62d586e6-e192-44bc-95f3-3cc43b7d8c62" /mnt/ebstry xfs defaults,nofail 0 0
+	sudo mount -a
+	df -h
+
+Snapshot
+
+1) Create snapshot
+2) Copy snapshot to another region
+3) Switch region
+4) Create EC2
+5) Create Volume from Snapshot
+6) Attach to EC2
+7) Mount in new instance
+	lsblk
+	sudo mount /dev/nvme1n1p1 /mnt/ebstry
+
+
+
+EFS
+
+sudo su
+mkdir efs
+yum install -y amazon-efs-utils
+
+copy NFS client
+
+S3
