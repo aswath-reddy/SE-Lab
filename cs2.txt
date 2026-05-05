@@ -1,0 +1,102 @@
+Experiment: 15 Analysing Android App Permissions and Mobile Traffic
+
+cd C:\Users\Admin\AppData\Local\Android\Sdk\emulator
+emulator -list-avds
+emulator -avd Pixel_9 -http-proxy http://10.0.2.2:8080
+
+Change proxy None->Manual -> Hostname as 10.0.2.2 
+[
+  cd C:\Users\Admin\AppData\Local\Android\Sdk\platform-tools
+  adb devices
+  adb shell settings put global http_proxy 10.0.2.2:8080
+  adb shell settings get global http_proxy
+]
+
+proxy -> options/proxy settings -> under Proxy Listeners-> Edit -> select All interfaces -> ok
+proxy -> intercept on
+
+example.com
+
+proxy->options/proxy settings->import/export CA certificate->Certificate in DER format>select file-> Downloads->give name as burpcer.der
+adb push C:\Users\rpich\Downloads\burpcer.der /sdcard/Download/
+
+Settings → Security & privacy → More security & privacy → Encryption & credentials → Install a certificate → CA certificate -> Downloads/burpcer.der
+https://example.com/
+
+
+
+Experiment 16: Testing IoT Device Security (Default Passwords & Open Ports)
+
+docker run -d -p 8090:3000 --name juiceshop bkimminich/juice-shop
+nmap -sV 192.168.0.148 (your ip)
+localhost:8090 -> Login -> admin@juice-sh.op / admin123
+
+
+Experiment 17: Creating and Analyzing Disk Images Using dc3dd and Autopsy (Alternative to FTK Imager)
+
+dd if=/dev/zero of=practice_disk.dd bs=1M count=100
+mkfs.ext4 practice_disk.dd
+sudo mkdir /mnt/practice
+sudo mount -o loop practice_disk.dd /mnt/practice
+echo "CyberSecurity Lab Evidence" | sudo tee /mnt/practice/evidence.txt
+ls /mnt/practice 
+sudo umount /mnt/practice
+sudo dd if=practice_disk.dd of=disk_image.dd bs=4M
+sudo autopsy
+
+
+Experiment 18 : LOG FILE ANALYSIS FOR INCIDENT DETECTION
+
+sudo apt update
+sudo apt install openssh-server -y
+cd /var/log
+ls
+last
+sudo lastb
+journalctl | less
+journalctl | grep ssh
+journalctl | grep "Failed"
+journalctl | grep "Failed password"
+journalctl | grep -i error
+
+cd /var/log/apache2
+ls
+sudo less access.log
+grep "404" /var/log/apache2/access.log
+less /var/log/dpkg.log
+sudo journalctl -f
+
+sudo service ssh start
+sudo service ssh status
+ip a
+ssh fakeuser@localhost
+journalctl | grep "Failed password"
+journalctl | grep "Failed password" | awk '{print $11}'
+journalctl | grep "Failed password" | awk '{print $11}' | sort | uniq -c | sort -nr
+journalctl --since "10 minutes ago"
+
+
+
+EXPERIMENT 20: Privacy Audit of Popular Apps (Desktop WhatsApp) and Websites (Facebook) & Data Breach Case Study Analysis
+
+sudo apt install nodejs npm –y
+sudo npm install -g nativefier
+nativefier https://web.whatsapp.com
+cd WhatsAppWeb-linux-x64
+./WhatsAppWeb
+https://reports.exodus-privacy.eu.org/
+wireshark
+
+
+Experiment 21 :Conducting a Security Audit and Risk Assessment 
+
+System Information (msinfo32)
+Windows Updates
+Firewall Status (Windows Defender Firewall)
+Antivirus (Windows Security)
+Password & Account Security
+Installed Apps
+Startup Programs
+Network Security
+Browser Security
+Data Backup
