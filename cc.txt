@@ -1,0 +1,238 @@
+🧪 EXPERIMENT 7: AWS Lambda + S3 → DynamoDB
+🎯 Goal:
+
+When a file is uploaded → Lambda runs → data stored in DynamoDB
+
+🪜 Steps:
+Login to AWS Console
+Open Lambda
+Click Create Function
+Choose:
+Author from scratch
+Runtime → Python
+Create IAM role (basic permissions)
+Paste the given Python code
+Add Trigger:
+Select S3
+Choose bucket
+Event → “Object Created”
+Click Deploy
+Upload file into S3 bucket
+Check DynamoDB → data inserted
+🧪 EXPERIMENT 8A: SNS Email Notification
+🎯 Goal:
+
+Send email using SNS
+
+🪜 Steps:
+Open SNS
+Click Create Topic
+Type → Standard
+Name → MyTopic
+Go to Subscriptions
+Click Create Subscription
+Protocol → Email
+Enter email
+Confirm from email inbox
+Click Publish Message
+Send test message
+
+👉 You receive email ✅
+
+🧪 EXPERIMENT 8B: S3 → SNS → Email
+🎯 Goal:
+
+Upload file → get email
+
+🪜 Steps:
+Create S3 bucket
+Create SNS topic (reuse above)
+In SNS:
+Allow S3 permission (policy)
+Open S3 bucket → Properties
+Go to Event Notifications
+Create new event:
+Event → Object create
+Destination → SNS
+Upload file
+
+👉 Email received ✅
+
+🧪 EXPERIMENT 8C: SQS Queue
+🎯 Goal:
+
+Send & receive message
+
+🪜 Steps:
+Open SQS
+Click Create Queue
+Type → Standard
+Open queue → Send message
+Type message → Send
+Click Poll messages
+
+👉 Message received ✅
+
+🧪 EXPERIMENT 8D: S3 → SNS → SQS → Lambda
+🎯 Goal:
+
+Full event pipeline
+
+🪜 Steps:
+Step 1: Create Services
+Create S3 bucket
+Create SNS topic
+Create SQS queue
+Step 2: Connect SNS → SQS
+Open SNS → Create subscription
+Protocol → SQS
+Select queue
+Step 3: Give Permissions
+Add policy in SQS (allow SNS)
+Add policy in SNS (allow S3)
+Step 4: Connect S3 → SNS
+Open S3 → Properties
+Event notification → SNS
+Step 5: Test Flow
+Upload file in S3
+Check SQS → message arrives
+Step 6: Lambda Consumer
+Create Lambda function
+Add SQS trigger
+Paste given code
+Deploy
+
+👉 Upload file → processed automatically ✅
+
+🧪 EXPERIMENT 9: Load Balancer + Auto Scaling
+🎯 Goal:
+
+Distribute traffic across servers
+
+Part A: Load Balancer
+🪜 Steps:
+Launch 2 EC2 instances
+
+Install Apache:
+
+yum install httpd -y
+systemctl start httpd
+Add HTML:
+Server 1 → “This is Server 1”
+Server 2 → “This is Server 2”
+Create Load Balancer
+Choose:
+Application Load Balancer
+Internet facing
+Create Target Group
+Register both EC2 instances
+Copy DNS → open in browser
+Refresh → servers switch
+
+👉 Load balancing works ✅
+
+Part B: Auto Scaling
+🪜 Steps:
+Create AMI from EC2
+Create Launch Template
+Create Auto Scaling Group
+Set:
+Min = 1
+Max = 4
+Desired = 2
+Attach Load Balancer
+Test:
+Terminate instance
+New instance auto-created
+
+👉 Auto scaling works ✅
+
+🧪 EXPERIMENT 10: Elastic Beanstalk
+🎯 Goal:
+
+Deploy app easily
+
+🪜 Steps:
+Open Elastic Beanstalk
+Click Create Application
+Enter name
+Create Environment:
+Web server
+Select platform (Node/Python/etc.)
+Upload code (.zip/.war)
+Configure:
+Instance type
+Scaling
+Click Create
+
+👉 Get URL → app runs ✅
+
+🧪 EXPERIMENT 11: Amazon Lex Chatbot
+🎯 Goal:
+
+Create chatbot
+
+🪜 Steps:
+Open Amazon Lex
+Create Bot
+Choose blank bot
+Create Intent
+Add utterances:
+“Book hotel”
+“Reserve room”
+Add slots:
+age
+location
+date
+nights
+Add responses
+Click Build
+Test chatbot
+
+👉 Bot works ✅
+
+🧪 EXPERIMENT 12: IAM User (GUI + CLI)
+🎯 Goal:
+
+Create user & access AWS
+
+GUI Steps:
+Open IAM
+Click Users → Create user
+Enable console access
+Attach policy:
+S3FullAccess
+Download credentials
+Login using IAM user
+CLI Steps:
+Install AWS CLI
+
+Run:
+
+aws configure
+Enter keys
+Test:
+aws s3 ls
+
+👉 Works ✅
+
+🧪 EXPERIMENT 13: IAM Role for EC2
+🎯 Goal:
+
+Access S3 without keys
+
+🪜 Steps:
+Open IAM → Create Role
+Select EC2
+Attach policy:
+S3FullAccess
+Go to EC2
+Select instance
+Attach role
+SSH into instance
+
+Run:
+
+aws s3 ls
+
+👉 Access works without keys ✅
